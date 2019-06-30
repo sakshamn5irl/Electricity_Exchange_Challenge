@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AddDsu Site</title>
+    <meta charset="UTF-8" />
+    <style>
+   .feed {padding: 5px 0}
+</style>
+  </head>
+
+  <body>
+
+	 <p id="addnew">
+		<a href="javascript:new_link()">Add New</a>
+	 </p>
+	 <p id="addnew">
+	      DSU Form 
+	</p>
+ <form method="post" action="new_ele2.php" onsubmit="return validate(this)">
+ <table>
+ <tr>
+
+	<td valign=top>
+		<div id="newform">
+			<div class="feed">
+			   <input type="text"   name="name" placeholder="DSU Name" size="50">
+			   <input type="text"   name="Description" placeholder="DSU Decription" size="50">
+			   <input type="number" name="Cert" placeholder="Operation Cert" size="50">
+			</div>
+		</div>
+	</td>
+ </tr>
+ </table>
+	<p>
+	</br>
+		<input type="submit" name="submit1">
+		<input type="reset" name="reset1" onclick="deleteChild();">
+	</p>
+
+ </form>
+ <div id="newformtpl" style="display:none">
+	<div class="feed">
+			<input type="text"   name="Name" placeholder="DSU Name" size="50">
+			<input type="text"   name="Description" placeholder="DSU Decription" size="50">
+			<input type="number" name="Cert" placeholder="Operation Cert" size="50">
+	</div>
+ </div>
+ </body>
+ </html>

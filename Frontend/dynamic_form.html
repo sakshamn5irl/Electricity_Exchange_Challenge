@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style>
+   .feed {padding: 5px 0}
+</style>
+</head>
+<body>
+
+	 <p id="addnew">
+		<a href="javascript:new_link()">Add New</a>
+	 </p>
+	 <p id="addnew">
+	      DSU Form 
+	</p>
+<form method="post" action="new_ele2.php" onsubmit="return validate(this)">
+<table>
+<tr>
+
+	<td valign=top>
+		<div id="newform">
+			<div class="feed">
+			   <input type="text"   name="name" placeholder="DSU Name" size="50">
+			   <input type="text"   name="Description" placeholder="DSU Decription" size="50">
+			   <input type="number" name="Cert" placeholder="Operation Cert" size="50">
+			</div>
+		</div>
+	</td>
+</tr>
+</table>
+	<p>
+		<br>
+		<input type="submit" name="submit1">
+		<input type="reset" name="reset1" onclick="deleteChild();">
+	</p>
+
+</form>
+<div id="newformtpl" style="display:none">
+	<div class="feed">
+			<input type="text"   name="Name" placeholder="DSU Name" size="50">
+			<input type="text"   name="Description" placeholder="DSU Decription" size="50">
+			<input type="number" name="Cert" placeholder="Operation Cert" size="50">
+	</div>
+</div>
+
+<script>
+
+var ct = 0;
+function new_link()
+{
+	ct+=1;
+	var div1 = document.createElement('div');
+	div1.id = ct;
+	console.log(div1.id);
+	
+	var delLink = '<div style="text-align:right;margin-right:65px"><a href="javascript:delIt('+ ct +')">Delete</a></div>';
+	div1.innerHTML = document.getElementById('newformtpl').innerHTML + delLink;
+	document.getElementById('newform').appendChild(div1);
+
+}
+
+function delIt(eleId)
+{	var d = document;
+	var ele = d.getElementById(eleId);
+	var parentEle = d.getElementById('newform');
+	parentEle.removeChild(ele);
+	console.log(newform);
+}
+
+function deleteChild(){
+	var e = document.getElementById('newform'); 
+
+var child = e.lastElementChild;  
+while (e.childNodes.length > 2) {
+    e.removeChild(e.lastChild);
+}
+    }
+</script>
+
+</body>
+</html>
