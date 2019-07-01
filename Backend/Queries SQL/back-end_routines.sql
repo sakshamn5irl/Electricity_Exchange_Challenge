@@ -31,17 +31,17 @@ USE `back-end`;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `build_list`(
-/*INOUT email_list varchar(4000)*/
+
 )
 BEGIN
  
  DECLARE v_finished INTEGER DEFAULT 0;
- DECLARE v_email  INTEGER DEFAULT 0;
- DECLARE v_email1  DECIMAL(13,4) DEFAULT 000.000;
+ DECLARE v_id  INTEGER DEFAULT 0;
+ DECLARE v_power  DECIMAL(13,4) DEFAULT 000.000;
  
  
- -- declare cursor for employee email
- DEClARE email_cursor CURSOR FOR 
+ 
+ DEClARE id_cursor CURSOR FOR 
 select  distinct dsu_id from site_power;
 
  DEClARE power_cursor CURSOR FOR 
@@ -52,32 +52,31 @@ select sum(power) from site_power group by dsu_id;
  -- declare NOT FOUND handler
  DECLARE CONTINUE HANDLER 
         FOR NOT FOUND SET v_finished = 1;
-   OPEN email_cursor;
+   OPEN id_cursor;
    OPEN power_cursor;
  
- get_email: LOOP
+ get_power: LOOP
  
- FETCH email_cursor INTO v_email;
- FETCH power_cursor INTO v_email1;
- /*
- IF v_finished = 1 THEN 
- LEAVE get_email;
- END IF;
+ FETCH id_cursor INTO v_id;
+ FETCH power_cursor INTO v_power;
  
- -- build email list
- SET email_list = CONCAT(v_email,";",email_list);
- */
  
  UPDATE dsu_power  
-  SET total_power = v_email1,
-time_aggregated = NOW()
-  where dsu_id = v_email;
- END LOOP get_email;
+  SET total_power = v_power,
+ time_aggregated = NOW()
+  where dsu_id = v_id;
+  
+ IF v_finished = 1 THEN 
+ LEAVE get_power;
+ END IF;
  
- CLOSE email_cursor;
+ END LOOP get_power;
+ 
  CLOSE power_cursor;
+ CLOSE id_cursor;
  
-END ;;
+ 
+END;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
